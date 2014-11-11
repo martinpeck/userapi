@@ -3,6 +3,6 @@
 This project is a work in progress.
 
 ## Description
-This project uses Sinatra to expose a REST API. The API is defined by the Swagger doc [/spec/spec.yaml](found here).
+This project uses Sinatra to expose a REST API. The API is defined by the Swagger doc [found here](/spec/spec.yaml).
 
- 
+
