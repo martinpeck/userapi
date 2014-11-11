@@ -1,0 +1,10 @@
+.DS_Store
+
+db/schema.rb
+*.db
+*.dat
+*.log
+migration.sql
+.idea/
+.bundle/
+vendor/
