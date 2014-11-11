@@ -3,25 +3,26 @@
   info:
     version: 1.0.0
     title: CodeClub User Service
-    description: An API for the creation, deletion and reading of users.
+    description: A very basic API for the creation, deletion and reading of users.
     contact:
       name: CodeClub User API Team
       url: http://codeclub.org.uk
     license:
       name: MIT
       url: http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT
-  basePath: /api
+  basePath: /
   schemes:
     - https
   consumes:
     - application/json
   produces:
     - application/json
+    
+# Service end-points
   paths:
     /users:
       get:
         description: Returns all users
-        operationId: findUsers
         produces:
           - application/json
         responses:
@@ -30,11 +31,8 @@
             schema:
               type: array
               items:
-                $ref: '#/definitions/user'
-          default:
-            description: unexpected error
-            schema:
-              $ref: '#/definitions/errorModel'
+                $ref: '#/definitions/userList'
+          
       post:
         description: Creates a new user.  
         operationId: addUser
@@ -53,10 +51,9 @@
             description: user response
             schema:
               $ref: '#/definitions/user'
-          default:
-            description: unexpected error
-            schema:
-              $ref: '#/definitions/errorModel'
+          400:
+            description: invalid user
+          
     /users/{username}:
       get:
         description: Returns a user based on username
@@ -75,10 +72,9 @@
             description: user response
             schema:
               $ref: '#/definitions/user'
-          default:
-            description: unexpected error
-            schema:
-              $ref: '#/definitions/errorModel'
+          404:
+            description: Unknown user
+            
       delete:
         description: deletes a single user based on the username supplied
         operationId: deleteUser
@@ -90,22 +86,33 @@
             required: true
             type: string
         responses:
-          204:
-            description: user deleted
-          default:
-            description: unexpected error
-            schema:
-              $ref: '#/definitions/errorModel'
+          200:
+            description: Used deleted
+          404:
+            description: Unknown user
+          401:
+            description: Unauthorized
+          403:
+            description: Forbidden
+
   definitions:
+
+    userList:
+      description: list of users
+      properties:
+        users:
+          type: array
+          schame:
+            $ref: user
+          
     user:
-      required:
-        - username
-        - email
       properties:
         username:
           type: string
+          description: username
         email:
           type: string
+
     newUser:
       required:
         - username
@@ -114,17 +121,11 @@
       properties:
         username:
           type: string
+          description: username
         email:
           type: string
+          description: email address
         password:
           type: string
-    errorModel:
-      required:
-        - code
-        - message
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
+          description: password
+

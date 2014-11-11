@@ -30,7 +30,9 @@ module Codeclub::Server
     end
 
     delete "/users/:username", provides: :json do | username |
-      halt 401 if request.env[API_KEY_NAME] != API_KEY_VALUE
+      api_key = request.env[API_KEY_NAME]
+      halt 403 if api_key.nil?
+      halt 401 if api_key != API_KEY_VALUE
       user = User.find_by_username(username)
       halt 404 if user.nil?
       user.delete
