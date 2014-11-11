@@ -1,8 +1,8 @@
 module Codeclub::Server
   class User < ActiveRecord::Base
 
-    validates :username, length: { within: 1..10}
-    #validates :username, format: { with: /\A[^@]+@([^@\.]+\.)+[^@\.]+\Z/ }, uniqueness: { case_sensitive: false }
+    validates :username, length: { within: 1..10}, uniqueness: { case_sensitive: false }
+    validates :email, format: { with: /\A[^@]+@([^@\.]+\.)+[^@\.]+\Z/ }, uniqueness: { case_sensitive: false }
     
     #there is never a reason to return the password hash, so conrtol JSON serialization
     def as_json(options = {})
