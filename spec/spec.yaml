@@ -1,0 +1,130 @@
+---
+  swagger: '2.0'
+  info:
+    version: 1.0.0
+    title: CodeClub User Service
+    description: An API for the creation, deletion and reading of users.
+    contact:
+      name: CodeClub User API Team
+      url: http://codeclub.org.uk
+    license:
+      name: MIT
+      url: http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT
+  basePath: /api
+  schemes:
+    - https
+  consumes:
+    - application/json
+  produces:
+    - application/json
+  paths:
+    /users:
+      get:
+        description: Returns all users
+        operationId: findUsers
+        produces:
+          - application/json
+        responses:
+          200:
+            description: user response
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/user'
+          default:
+            description: unexpected error
+            schema:
+              $ref: '#/definitions/errorModel'
+      post:
+        description: Creates a new user.  
+        operationId: addUser
+        produces:
+          - application/json
+        parameters:
+          -
+            name: user
+            in: body
+            description: User to add
+            required: true
+            schema:
+              $ref: '#/definitions/newUser'
+        responses:
+          200:
+            description: user response
+            schema:
+              $ref: '#/definitions/user'
+          default:
+            description: unexpected error
+            schema:
+              $ref: '#/definitions/errorModel'
+    /users/{username}:
+      get:
+        description: Returns a user based on username
+        operationId: findUserById
+        produces:
+          - application/json
+        parameters:
+          -
+            name: username
+            in: path
+            description: Username of user to fetch
+            required: true
+            type: string
+        responses:
+          200:
+            description: user response
+            schema:
+              $ref: '#/definitions/user'
+          default:
+            description: unexpected error
+            schema:
+              $ref: '#/definitions/errorModel'
+      delete:
+        description: deletes a single user based on the username supplied
+        operationId: deleteUser
+        parameters:
+          -
+            name: username
+            in: path
+            description: username of user to delete
+            required: true
+            type: string
+        responses:
+          204:
+            description: user deleted
+          default:
+            description: unexpected error
+            schema:
+              $ref: '#/definitions/errorModel'
+  definitions:
+    user:
+      required:
+        - username
+        - email
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+    newUser:
+      required:
+        - username
+        - email
+        - password
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+    errorModel:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
