@@ -1,6 +1,8 @@
 #Gemfile
 source "https://rubygems.org"
 
+gem "scrypt"
+gem "puma"
 gem "sinatra"
 gem "sqlite3"
 gem "activerecord"
