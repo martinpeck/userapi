@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/martinpeck/userapi.png?label=ready&title=Ready)](https://waffle.io/martinpeck/userapi)
 # Sinatra based API for management of users
 
 This project is a work in progress.
